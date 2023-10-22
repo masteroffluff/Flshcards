@@ -27,3 +27,19 @@ it("should import the default state", () => {
     })
 });
 
+it("should create a new quiz", ()=>{
+
+    const previousState= {
+        quizzes:{}
+    }
+    const payloadObject = { id: '456', name: 'quiz for example topic', topicId: '123', cardIds: ['789', '101', '102']}
+    const resultObject = {quizzes:{
+        '456': {
+          id: '456',
+          topicId: '123',
+          name: 'quiz for example topic',
+          cardIds: ['789', '101', '102']
+        }
+    }}
+    expect(reducer(previousState, addQuiz(payloadObject))).toEqual(resultObject)
+})

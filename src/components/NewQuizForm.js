@@ -4,31 +4,32 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import ROUTES from "../app/routes";
 // import selectors
+import { selectTopic, addQuizId } from '../features/topics/topicsSlice'
+import { addQuiz } from "../features/quizzes/quizzesSlice";
 
 export default function NewQuizForm() {
   const [name, setName] = useState("");
   const [cards, setCards] = useState([]);
   const [topicId, setTopicId] = useState("");
   const navigate = useNavigate();
-  const topics = {};  // Replace with topics 
+  const topics = useSelector(selectTopic)
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name.length === 0) {
       return;
-    }
+    };
 
     const cardIds = [];
 
     // create the new cards here and add each card's id to cardIds
     // create the new quiz here
-
     const quizId = uuidv4();
-
+    const newQuiz = { id: quizId, name, topicId, cardIds};
     // dispatch add quiz action 
-
-    navigate(ROUTES.quizzesRoute())
+    dispatch(addQuiz(newQuiz));
+    navigate(ROUTES.quizzesRoute());
   };
 
   const addCardInputs = (e) => {

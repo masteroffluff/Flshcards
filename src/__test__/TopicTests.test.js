@@ -20,7 +20,7 @@ import Quizzes from "../features/quizzes/Quizzes";
 
 
 
-import reducer, { addTopic } from '../features/topics/topicsSlice.js'
+import reducer, { addTopic,addQuizId } from '../features/topics/topicsSlice.js'
 
 it('should return the initial state', () => {
   expect(reducer(undefined, { type: undefined })).toEqual({
@@ -40,10 +40,36 @@ it('should handle a topic being added', () => {
         quizIds: []
       }
     }}
-
+  
 
 
   expect(reducer(previousState, addTopic(payloadObject))).toEqual(resultObject)
+})
+
+it('should add a quiz id to the list of quiz ids',()=>{
+  const previousState =  {
+    topics:{
+      '123': {
+        id: '123',
+        name: 'example topic',
+        icon: 'icon url',
+        quizIds: []
+      }
+    }}
+  const resultObject =  {
+    topics:{
+      '123': {
+        id: '123',
+        name: 'example topic',
+        icon: 'icon url',
+        quizIds: ['456']
+      }
+    }} 
+  const payloadObject = { id: '456', name: 'quiz name', topicId: '123', cardIds: ['1', '2', '3']}
+  
+  expect(reducer(previousState, addQuizId(payloadObject))).toEqual(resultObject)
+
+
 })
 
 
