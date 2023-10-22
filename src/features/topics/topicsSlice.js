@@ -13,7 +13,7 @@ export const topicsSlice = createSlice(
                 const {id, name, icon}=action.payload;
                 return {topics:{
                     ...state.topics,
-                    [`${id}`]: {id,name,icon,quizIds: []}
+                    [`${id}`]: {id,name,icon,quizIds:[]}
                   }}
             }
         }
@@ -21,7 +21,7 @@ export const topicsSlice = createSlice(
     }
 )
 
-export const selectTopic = (state) => state.topic;
+export const selectTopic = (state) => state.topics.topics;
 
 export const { addTopic } = topicsSlice.actions;
 

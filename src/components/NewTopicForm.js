@@ -33,12 +33,14 @@ export default function NewTopicForm() {
         <div className="form-section">
           <input
             id="topic-name"
+            aria-label = "topic-name" 
             type="text"
             value={name}
             onChange={(e) => setName(e.currentTarget.value)}
             placeholder="Topic Name"
           />
           <select
+            aria-label = "topic.icon"
             onChange={(e) => setIcon(e.currentTarget.value)}
             required
             defaultValue="default"
