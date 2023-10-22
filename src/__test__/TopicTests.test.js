@@ -3,11 +3,13 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 //import NewTopicForm from "../components/NewTopicForm";
 import App from '../app/App'
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './test-utils';
+import { BrowserRouter} from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 import NewQuizForm from "../components/NewQuizForm";
 import NewTopicForm from "../components/NewTopicForm";
@@ -18,15 +20,15 @@ import Quizzes from "../features/quizzes/Quizzes";
 
 
 
-import reducer, { addTopic,selectTopic } from '../features/topics/topicsSlice.js'
+import reducer, { addTopic } from '../features/topics/topicsSlice.js'
 
-test('should return the initial state', () => {
+it('should return the initial state', () => {
   expect(reducer(undefined, { type: undefined })).toEqual({
     topics:{}
 })
 })
 
-test('should handle a topic being added', () => {
+it('should handle a topic being added', () => {
   const previousState = {topics:{}}
   const payloadObject = {id: '123', name: 'example topic', icon: 'icon url'}
   const resultObject =  {
@@ -46,19 +48,22 @@ test('should handle a topic being added', () => {
 
 
 it('should pick up entered topic',()=>{
-  const previousState = {topics:{}}
+  //const previousState = {topics:{}}
   const testName = "test 1";
   const testIcon = "https://static-assets.codecademy.com/skillpaths/react-redux/redux-quiz-app/book.svg"
   //render (wrapper(<Topic />));
   //screen.debug();
-  renderWithProviders(<NewTopicForm />);
-  screen.debug();
+  const {store} =renderWithProviders(<BrowserRouter><NewTopicForm /></BrowserRouter>);
+
   
-/*   const topicName = screen.getByRole('textbox')
-  const topicIcon = screen.getByRole('listbox', {name :'topic-icon'})
-  userEvent.type(topicName,namen)
-  userEvent.selectOptions(topicIcon,iconen)
-   */
+  const topicName = screen.getByRole('textbox')
+  const topicIcon = screen.getByRole('combobox')
+  const topicButton = screen.getByRole('button')
+  userEvent.type(topicName,testName)
+  userEvent.selectOptions(topicIcon,testIcon)
+  userEvent.click(topicButton)
+  const topicState =  (store.getState().topics.topics)
+  expect (Object.values(topicState)[0].name).toEqual("test 1")
 }
 
 )
