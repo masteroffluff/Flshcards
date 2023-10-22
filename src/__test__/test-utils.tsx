@@ -13,6 +13,8 @@ export function wrappedinProvider({ children }) {
   import { Provider } from "react-redux";
   // As a basic setup, import your same slice reducers
   import topicsReducer from "../features/topics/topicsSlice";
+  import quizzesReducer from "../features/quizzes/quizzesSlice"
+  import cardsReducer from "../features/cards/cardsSlice"
   
   export function renderWithProviders(
     ui,
@@ -20,7 +22,11 @@ export function wrappedinProvider({ children }) {
       preloadedState = {},
       // Automatically create a store instance if no store was passed in
       store = configureStore({
-        reducer: { topics:topicsReducer },
+        reducer: { 
+          topics:topicsReducer,
+          quizzes:quizzesReducer,
+          cards:cardsReducer,
+         },
         preloadedState,
       }),
       ...renderOptions

@@ -17,7 +17,7 @@ export default function Topic() {
   }
   
   const quizzesForTopic = topic.quizIds.map((quizId) => quizzes[quizId]);
-
+  console.log(quizzesForTopic)
   return (
     <section>
       <img src={topic.icon} alt="" className="topic-icon" />

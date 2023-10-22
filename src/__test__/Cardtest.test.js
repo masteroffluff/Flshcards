@@ -9,6 +9,7 @@ import App from '../app/App'
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './test-utils';
 import { BrowserRouter, Router } from 'react-router-dom';
+import { v4 as uuidv4 } from "uuid";
 
 import NewQuizForm from "../components/NewQuizForm";
 import NewTopicForm from "../components/NewTopicForm";
@@ -27,7 +28,7 @@ it("should import the default state", () => {
     })
 });
 
-it("should create a new quiz", ()=>{
+it("should create a new card", ()=>{
 
     const previousState= {
         cards:{}
@@ -39,4 +40,19 @@ it("should create a new quiz", ()=>{
         }
     }}
     expect(reducer(previousState, addCard(payloadObject))).toEqual(resultObject)
+})
+
+it("should return the a card given the id", ()=>{
+    const previousState= {
+        cards:{}
+    }
+    const id = uuidv4()
+    const payloadObject = {  id, front: 'front of card', back: 'back of card'}
+
+    const result = reducer(previousState, addCard(payloadObject)).cards
+    console.log(result)
+    //console.log(result[id])
+    expect(result[`${id}`]).toBeDefined()
+
+
 })
